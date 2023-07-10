@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f2f2f2;
+      background-color: #36393f; /* Discord background color */
     }
 
     .container {
@@ -17,35 +17,155 @@
       margin: 0 auto;
       padding: 40px;
       text-align: center;
+      color: #b9bbbe; /* Discord secondary text color */
+    }
+
+    .top-menu {
+      background-color: #2f3136; /* Top menu background color */
+      color: #b9bbbe; /* Top menu text color */
+      display: flex;
+      justify-content: flex-end; /* Move the menu to the right */
+      align-items: center;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .top-menu ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .top-menu ul li {
+      margin-right: 10px;
+      position: relative;
+    }
+
+    .top-menu ul li a {
+      text-decoration: none;
+      color: #b9bbbe;
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      background-color: #2f3136; /* Submenu background color */
+      padding: 10px;
+      z-index: 1;
+      left: 0;
+      top: 100%;
+      width: 100%;
+    }
+
+    .top-menu ul li:hover .submenu {
+      display: block;
+    }
+
+    .submenu a {
+      color: #b9bbbe; /* Submenu text color */
+      display: block;
+      margin-top: 5px;
     }
 
     h1 {
       font-size: 36px;
       margin-bottom: 20px;
-      color: #000;
+      color: #fff; /* Discord text color */
     }
 
     p {
       font-size: 18px;
       margin-bottom: 20px;
-      color: #444;
+      color: #b9bbbe; /* Discord secondary text color */
     }
-    
-    /* Apple Silver Theme */
+
+    /* Discord Theme */
     body {
-      --theme-color: #c0c0c0;
+      --theme-color: #7289da; /* Discord primary theme color */
     }
 
     h1, p {
       color: var(--theme-color);
     }
+
+    /* Mobile Styles */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="top-menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Projects</a>
+        <ul class="submenu">
+          <li><a href="#web" id="web-link">Web</a></li>
+          <li><a href="#embedded" id="embedded-link">Embedded Systems</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html" id="about-link">About</a></li>
+    </ul>
+  </div>
   <div class="container">
     <h1>Welcome to My GitHub Homepage</h1>
     <p>Thanks for visiting! Feel free to explore my repositories and projects.</p>
     <p>Check out my latest work and contributions.</p>
   </div>
+
+  <script>
+    // Function to load content from a file into the main container
+    function loadContentFromFile(file) {
+      const container = document.querySelector('.container');
+
+      fetch(file)
+        .then(response => response.text())
+        .then(data => {
+          container.innerHTML = data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+    // Event listener for the Web menu link
+    const webLink = document.getElementById('web-link');
+    webLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      loadContentFromFile('prj_web.html');
+    });
+
+    // Event listener for the Embedded Systems menu link
+    const embeddedLink = document.getElementById('embedded-link');
+    embeddedLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      loadContentFromFile('prj_es.html');
+    });
+
+    // Function to load content from about.html into the main container
+    function loadAboutContent() {
+      const container = document.querySelector('.container');
+
+      fetch('about.html')
+        .then(response => response.text())
+        .then(data => {
+          container.innerHTML = data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+    // Event listener for the About menu link
+    const aboutLink = document.getElementById('about-link');
+    aboutLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      loadAboutContent();
+    });
+  </script>
 </body>
 </html>
